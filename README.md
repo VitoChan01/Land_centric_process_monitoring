@@ -10,16 +10,16 @@ This repository contains the implementation of "Seed-to-Harvest Process Monitori
 ## Dependencies
 * Python 3.11+
 ## Required packages
-* earthengine-api
-* GeoPandas
-* geemap
-* Matplotlib
-* Numpy
-* Pandas
-* PM4Py
-* pyproj
-* SciPy
-## Structure
+* earthengine-api 0.1.350
+* GeoPandas 0.12.2
+* geemap 0.21.0
+* Matplotlib 3.7.1
+* Numpy 1.23.5
+* Pandas 1.5.3
+* PM4Py 2.7.4
+* pyproj 3.5.0
+* SciPy 1.10.1
+## Directories
 ### Event_log
 This directory contains the event log generated in this study.
 ### Source
@@ -28,13 +28,16 @@ This directory contains the codes of this implementation.
 This directory contains the plots generated.
 ## Codes
 ### Implementation
-- [Download time series data from Google Earth Engine](Source/GEE_download.ipynb)
-- [Event log generation](Source/MACD_NDVI.ipynb)
-- [Crop rotation prediction](Source/rotation_prediction.py)
+- `GEE_download.ipynb`: [Download time series data from Google Earth Engine](Source/GEE_download.ipynb)
+    * To download data from GEE a GEE account is required. ([Sign up for GEE](https://earthengine.google.com/)) 
+- `MACD_NDVI.ipynb`: [Event log generation](Source/MACD_NDVI.ipynb)
+- `crop_prediction.ipynb`: [Crop rotation prediction](Source/crop_prediction.ipynb)
 ### Evaluation
-- [Performance spectrum](Source/pm4py_temporal.ipynb)
-- [Smoothing assessment](Source/smoothing_effect.ipynb)
-## Overview
+- `pm4py_temporal.ipynb`: [Performance spectrum](Source/pm4py_temporal.ipynb)
+- `smoothing_effect.ipynb`: [Smoothing assessment](Source/smoothing_effect.ipynb)
+### Modules
+- `seed_to_harvest.py`: [MACD activity recognition and event log enrichment](Source/seed_to_harvest.py)
+- `rotation_prediction.py`: [Markov chain rotation prediction](Source/rotation_prediction.py)
 
 ## License 
 [LICENSE](LICENSE)
