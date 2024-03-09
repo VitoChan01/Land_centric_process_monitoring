@@ -27,11 +27,13 @@ This directory contains the codes of this implementation.
 ### Result
 This directory contains the plots generated.
 ## Codes
-[Download time series data from Google Earth Engine](Source/GEE_download.ipynb)
-[Event log generation](Source/MACD_NDVI.ipynb)
-[Crop rotation prediction](Source/rotation_prediction.py)
-[Performance spectrum](Source/pm4py_temporal.ipynb)
-[Smoothing assessment](Source/smoothing_effect.ipynb)
+### Implementation
+- [Download time series data from Google Earth Engine](Source/GEE_download.ipynb)
+- [Event log generation](Source/MACD_NDVI.ipynb)
+- [Crop rotation prediction](Source/rotation_prediction.py)
+### Evaluation
+- [Performance spectrum](Source/pm4py_temporal.ipynb)
+- [Smoothing assessment](Source/smoothing_effect.ipynb)
 ## Overview
 
 ## License 
