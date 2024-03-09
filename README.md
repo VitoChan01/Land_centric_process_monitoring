@@ -31,4 +31,4 @@ This directory contains the plots generated.
 ## Overview
 
 ## License 
-[Link to Other File](LICENSE.md)
+[LICENSE](Seed_to_harvest_process_monitoring/LICENSE)
