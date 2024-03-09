@@ -38,6 +38,11 @@ This directory contains the plots generated.
 ### Modules
 - `seed_to_harvest.py`: [MACD activity recognition and event log enrichment](Source/seed_to_harvest.py)
 - `rotation_prediction.py`: [Markov chain rotation prediction](Source/rotation_prediction.py)
-
+## Overview
+### Monitoring of Seed-to-Harvest Process
+In this study we have constructed a framework for monitoring agricultural business process through satellite.
+![framework](Figure/framework_overview.png)
+To evaluate our approach, we have conducted a case study for 148 farm patches in Idaho, United States. This case study studied 15 years of farming between 2007 and 2022. 
+![studysite](Figure/studysite.png)
 ## License 
 [LICENSE](LICENSE)
