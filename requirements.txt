@@ -52,7 +52,9 @@ future==0.18.3
 GDAL @ file:///C:/Users/Vito/Documents/GDAL-3.4.3-cp311-cp311-win_amd64.whl
 geemap==0.20.5
 geocoder==1.38.1
+geographiclib==2.0
 geopandas==0.12.2
+geopy==2.4.1
 google-api-core==2.11.0
 google-api-python-client==2.85.0
 google-auth==2.17.3
