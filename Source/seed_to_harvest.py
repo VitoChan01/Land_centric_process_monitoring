@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from scipy import signal
 from datetime import datetime
+from geopy.geocoders import Nominatim
 
 #filters
 def IIRff(data, oder, cf):
@@ -231,7 +232,20 @@ def macd_stages(df, yt, var, start_season, end_season, a = 5, b = 10, c = 5, mac
         return pd.to_datetime(yt+f'{emg}', format="%Y%j"), pd.to_datetime(yt+f'{mat+1}', format="%Y%j"), pd.to_datetime(yt+f'{sen}', format="%Y%j"), pd.to_datetime(yt+f'{dor+1}', format="%Y%j"), macd, macd_div, 0
     else:
         return pd.to_datetime(yt+f'{emg}', format="%Y%j"), pd.to_datetime(yt+f'{mat+1}', format="%Y%j"), pd.to_datetime(yt+f'{sen}', format="%Y%j"), pd.to_datetime(yt+f'{dor+1}', format="%Y%j"), macd, macd_div, 1
+def get_location_info(latlon):
+    latitude, longitude = latlon[1], latlon[0]
+    geolocator = Nominatim(user_agent="geo_locator")
+    location = geolocator.reverse((latitude, longitude), exactly_one=True)
+    address = location.raw['address']
     
+    country = address.get('country', '')
+    county = address.get('county', '')
+    if 'state' in address:
+        state = address.get('state', '')
+        return county, state, country
+    elif 'state_district' in address:
+        province = address.get('state_district', '')
+        return county, province, country   
 #log df generation
 def itwritein(lst, vara):
     """
@@ -250,7 +264,7 @@ def itwritein(lst, vara):
     lst.append(vara[3])
     return lst
 
-def eventtime_MACD(ndvits, seasondf, sitecdl, siteid, siteloc, county, state, country, start_year=None, end_year=None):
+def eventtime_MACD(ndvits, seasondf, sitecdl, siteid, siteloc, start_year=None, end_year=None):
     '''
     Apply MACD stage detection annually
 
@@ -260,9 +274,6 @@ def eventtime_MACD(ndvits, seasondf, sitecdl, siteid, siteloc, county, state, co
     sitecdl: crop type (pd.DataFrame)
     siteid: site ID (int)
     siteloc: WGS84 lon lat (str)
-    county: county (str)
-    state: state (str)
-    country: country (str)
     start_year: start year (int)
     end_year: end year (int)
 
@@ -271,6 +282,7 @@ def eventtime_MACD(ndvits, seasondf, sitecdl, siteid, siteloc, county, state, co
     Warning_log: log of cases that encountered errors ([Site ID, year, Crop]) (list)
     '''
     ndvits=ndvits.interpolate(method='linear',axis=0)
+    county, state, country = get_location_info(siteloc)
     Warning_log=[]
     crop_id=[ 'Unidentify','Corn','Cotton','Rice','Sorghum','Soybeans','Sunflower','','','','Peanuts','Tobacco','Sweet Corn','Pop or Orn Corn','Mint','','','','','','','Barley','Durum Wheat','Spring Wheat','Winter Wheat','Other Small Grains','Dbl Crop WinWht/Soybeans','Rye','Oats','Millet','Speltz','Canola','Flaxseed','Safflower','Rape Seed','Mustard','Alfalfa','Other Hay/Non Alfalfa','Camelina','Buckwheat','','Sugarbeets','Dry Beans','Potatoes','Other Crops','Sugarcane','Sweet Potatoes','Misc Vegs & Fruits','Watermelons','Onions','Cucumbers','Chick Peas','Lentils','Peas','Tomatoes','Caneberries','Hops','Herbs','Clover/Wildflowers','Sod/Grass Seed','Switchgrass','Fallow/Idle Cropland','Pasture/Grass','Forest','Shrubland','Barren','Cherries','Peaches','Apples','Grapes','Christmas Trees','Other Tree Crops','Citrus','Pecans','Almonds','Walnuts','Pears','','','','Clouds/No Data','Developed','Water','','','','Wetlands','Nonag/Undefined','','','','Aquaculture','','','','','','','','','','','','','','','','','','','Open Water','Perennial Ice/Snow','','','','','','','','','Developed/Open Space','Developed/Low Intensity','Developed/Med Intensity','Developed/High Intensity','','','','','','','Barren','','','','','','','','','','Deciduous Forest','Evergreen Forest','Mixed Forest','','','','','','','','','Shrubland','','','','','','','','','','','','','','','','','','','','','','','','Grassland/Pasture','','','','','','','','','','','','','','Woody Wetlands','','','','','Herbaceous Wetlands','','','','','','','','','Pistachios','Triticale','Carrots','Asparagus','Garlic','Cantaloupes','Prunes','Olives','Oranges','Honeydew Melons','Broccoli','Avocados','Peppers','Pomegranates','Nectarines','Greens','Plums','Strawberries','Squash','Apricots','Vetch','Dbl Crop WinWht/Corn','Dbl Crop Oats/Corn','Lettuce','Dbl Crop Triticale/Corn','Pumpkins','Dbl Crop Lettuce/Durum Wht','Dbl Crop Lettuce/Cantaloupe','Dbl Crop Lettuce/Cotton','Dbl Crop Lettuce/Barley','Dbl Crop Durum Wht/Sorghum','Dbl Crop Barley/Sorghum','Dbl Crop WinWht/Sorghum','Dbl Crop Barley/Corn','Dbl Crop WinWht/Cotton','Dbl Crop Soybeans/Cotton','Dbl Crop Soybeans/Oats','Dbl Crop Corn/Soybeans','Blueberries','Cabbage','Cauliflower','Celery','Radishes','Turnips','Eggplants','Gourds','Cranberries','','','','Dbl Crop Barley/Soybeans']
     if start_year==None:
