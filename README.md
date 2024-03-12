@@ -6,7 +6,6 @@ Agricultural processes exhibit unique levels of complexity and risk. Challenges 
 In this paper, we address the unique challenges of agricultural processes. More specifically, we introduce a novel technique for monitoring seed-to-harvest processes by help of satellite sensors. We provide a proof-of-concept implementation and evaluate it in a case study on publicly available farm data from the United States. The evaluation demonstrates the viability of process mining as a technique for automatic monitoring of seed-to-harvest processes.
 
 **Framework**
-
 In this study we have developed a framework for monitoring agricultural business process through satellite.
 ![framework](Figure/framework_overview.png)
 For evaluation, we have conducted a case study for 148 farm patches in Idaho, United States. This case study studied 15 years of farming between 2007 and 2022. 
