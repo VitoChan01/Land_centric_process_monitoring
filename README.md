@@ -37,17 +37,17 @@ This directory contains the codes of this implementation.
 The generated event log has the following attributes:
 | Attribute | Description | Type |
 |:----------:|:----------:|:----------:|
-| Activity| The activity recognized | str |
-| Timestamp| Timestamp filtered based on VI likelihood | pandas.timestamp |
-| Time_uncertainty| All valid recognition timestamp | list of pandas.timestamp |
+| Activity| Activity recognized | str |
+| Timestamp| Timestamp filtered based on VI likelihood | pandas datetime object |
+| Time_uncertainty| All valid recognition timestamp | list of pandas datetime object |
 | CaseID| ID given to the case structured as xxxx_yyyy. The first 4 digit represent the ID given to the site and the last 4 digit represent the year of the case | str |
 | Crop| Cultivated crop | str |
 | SiteID| ID given to the farm patch | int |
-| WGS84_lon_lat| The center coordinate of the farm patch (WGS84) | list |
-| County| The county in which the farm patch is located determined by the WGS84 coordinate | str |
-| State| The state/province in which the farm patch is located determined by the WGS84 coordinate | str |
-| Country| The country in which the farm patch is located determined by the WGS84 coordinate | str |
-| NDVI_range| The max/min range of valid recognition NDVI | list |
+| WGS84_lon_lat| Center coordinate of the farm patch (WGS84) | list |
+| County| County in which the farm patch is located determined by WGS84 coordinate | str |
+| State| State/province in which the farm patch is located determined by WGS84 coordinate | str |
+| Country| Country in which the farm patch is located determined by WGS84 coordinate | str |
+| NDVI_range| Max/min range of valid recognition NDVI | list |
 | num_valid_est| Number of valid recognition(s) | int |
 ## Overview
 ### Monitoring of Seed-to-Harvest Process
