@@ -49,6 +49,7 @@ The generated event log has the following attributes:
 | Country| Country in which the farm patch is located determined by WGS84 coordinate | str |
 | NDVI_range| Max/min range of valid recognition NDVI | list |
 | num_valid_est| Number of valid recognition(s) | int |
+| Multiple_crop| Binary indicator of whether multiple crop type was detected on field. 0: only one type of crop were found. 1: more than one types of crop were found. | int |
 ## Overview
 ### Monitoring of Seed-to-Harvest Process
 In this study we have constructed a framework for monitoring agricultural business process through satellite.
