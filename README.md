@@ -2,7 +2,7 @@
 **Seed-to-Harvest Process Monitoring using Remote Sensing**
 
 
-Agricultural processes exhibit unique levels of complexity and risk. Challenges of monitoring these processes arise from the diversity of environmental factors that can hit a field at any time and the fuzziness of the actual state of the crop. Precise capabilities of monitoring the seed-to-harvest process provides benefits for the management activities of the farmer as well as for partners such as financial institutions.
+Agricultural processes exhibit unique levels of complexity and risk. This makes the monitoring of seed-to-harvest processes an important management task of farmers as well as their business partners such as financial institutions. Agricultural processes are difficult to monitoring due to a diversity of environmental factors that can hit a field at any time and the fuzziness of the actual state of the crop. Therefore, recent techniques of process mining cannot be readily applied.
 In this paper, we address the unique challenges of agricultural processes. More specifically, we introduce a novel technique for monitoring seed-to-harvest processes by help of satellite sensors. We provide a proof-of-concept implementation and evaluate it in a case study on publicly available farm data from the United States. The evaluation demonstrates the viability of process mining as a technique for automatic monitoring of seed-to-harvest processes.
 
 **Framework**
