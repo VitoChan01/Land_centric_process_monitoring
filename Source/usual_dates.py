@@ -26,21 +26,23 @@ timelog['Day_of_Year'] = timelog['Timestamp'].dt.dayofyear
 crops = ['Potatoes', 'Spring Wheat', 'Sugarbeets']
 usual = [potato_usual, springwheat_usual, sugarbeets_usual]
 
-fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(12,5))
-axes=axes.flatten()
+fig, ax = plt.subplots(nrows=1, ncols=3, figsize=(12,6))
+ax=ax.flatten()
 
 for i, crop in enumerate(crops):
     crop_df = timelog[timelog['Multiple_crop']==0][timelog[timelog['Multiple_crop']==0]['Crop'] == crop]
-    axes[i].boxplot([crop_df[crop_df['Activity'] == activity]['Day_of_Year'] for activity in ['Emergence', 'Maturity', 'Senescence', 'Dormancy']], labels=['Emergence', 'Maturity', 'Senescence', 'Dormancy'])
-    axes[i].hlines(usual[i][0], 0.5, 1.5, ls='--', lw=1.5, color='g', label='usual planting')
-    axes[i].hlines(usual[i][1], 3.5, 4.5, ls='--', lw=1.5, color='r', label='usual harvesting')
-    axes[i].set_ylabel('Day of Year')
-    axes[i].set_title(f'{crop}')
-    axes[i].set_xlabel('Activity')
-    axes[i].legend()
+    ax[i].boxplot([crop_df[crop_df['Activity'] == activity]['Day_of_Year'] for activity in ['Emergence', 'Maturity', 'Senescence', 'Dormancy']], labels=['Emergence', 'Maturity', 'Senescence', 'Dormancy'])
+    ax[i].hlines(usual[i][0], 0.5, 1.5, ls='--', lw=1.5, color='g', label='usual planting')
+    ax[i].hlines(usual[i][1], 3.5, 4.5, ls='--', lw=1.5, color='r', label='usual harvesting')
+    ax[i].set_title(f'{crop}',  fontsize=18)
+    ax[i].set_xlabel('Activity',  fontsize=18)
+    ax[i].tick_params(axis='x', labelsize=16)
+    ax[i].set_xticklabels(ax[i].get_xticklabels(), rotation=45)
+ax[0].set_ylabel('Day of Year', fontsize=18)
+ax[0].legend()
+ 
 
-
-plt.suptitle('Result distribution with usual planting and harvesting dates')
+plt.suptitle('Result distribution with usual planting and harvesting dates',  fontsize=24)
 plt.tight_layout()
 plt.savefig('Result/boxplot_3crop.pdf', format='pdf')
 plt.show()

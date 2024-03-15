@@ -36,9 +36,12 @@ for i in np.arange(0,148,1):
 data = [num_LMM_org, num_LMM_IIR, num_LMM_SG, num_LMM_WE]
 labels = ['Unfiltered', 'BZP', 'SG', 'WE']
 
-plt.boxplot(data, labels=labels)
-plt.title('Number of Local Maxima and Minima')
-plt.xlabel('Smoothing Method')
-plt.ylabel('Count')
+plt.figure(figsize=(12, 4))
+plt.boxplot(data, labels=labels, vert=False)
+plt.title('Number of Local Maxima and Minima', fontsize=24)
+plt.ylabel('Smoothing Method', fontsize=18)
+plt.xlabel('Frequency', fontsize=18)
+plt.tick_params(axis='y', labelsize=16) 
+plt.tight_layout()
 plt.savefig('Result/LMM_boxplot.pdf')
 plt.show()
