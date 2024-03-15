@@ -35,10 +35,10 @@ for i, crop in enumerate(crops):
     ax[i].hlines(usual[i][0], 0.5, 1.5, ls='--', lw=1.5, color='g', label='usual planting')
     ax[i].hlines(usual[i][1], 3.5, 4.5, ls='--', lw=1.5, color='r', label='usual harvesting')
     ax[i].set_title(f'{crop}',  fontsize=18)
-    ax[i].set_xlabel('Activity',  fontsize=18)
     ax[i].tick_params(axis='x', labelsize=16)
     ax[i].set_xticklabels(ax[i].get_xticklabels(), rotation=45)
 ax[0].set_ylabel('Day of Year', fontsize=18)
+ax[1].set_xlabel('Activity',  fontsize=18)
 ax[0].legend()
  
 
