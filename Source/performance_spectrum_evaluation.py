@@ -196,7 +196,7 @@ def plot_ps_separate_ax(yt, LG, axi, ci=None, title='', cutoff=None, plotquartil
                 Line2D([0], [0], color='r',linewidth=2, alpha=1, label='On going cases'),
                 Line2D([0], [0],color='k',linewidth=2, alpha=1, label='Completed cases')]
             if cutoff=='usual_harvest_end':
-                legend_elements+=[Line2D([0], [0],color='r', linestyle='--', label='End of usual harvest period')]
+                legend_elements+=[Line2D([0], [0],color='r', linestyle='--', label='End of usual harvest period\nDate: '+(datetime(int(yt), 1, 1) + timedelta(250 - 1)).strftime("%Y-%m-%d"))]
             else:
                 legend_elements+=[Line2D([0], [0],color='r', linestyle='--', label='Date: '+(datetime(int(yt), 1, 1) + timedelta(250 - 1)).strftime("%Y-%m-%d"))]
             legend_elements+=[Patch(facecolor='lightgrey', alpha=0.9, edgecolor='g', linestyle='--',label='Usual range')]
