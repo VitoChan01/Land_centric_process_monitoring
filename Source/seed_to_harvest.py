@@ -60,7 +60,7 @@ def macd_cal(df, var, a = 5, b = 10, c = 5):
     macd_div = macd - signal
     return macd, macd_div
 
-def macd_stages(df, yt, var, start_season, end_season, a = 5, b = 10, c = 5, macd_div_threshold = 0, macd_threshold = 0, min_VI = 0.01, emg_max_VI = 0.5, sen_max_VI = 0.85, sma_n=7):
+def macd_stages(df, yt, var, start_season, end_season, a = 5, b = 10, c = 5, macd_div_threshold = 0, macd_threshold = 0, min_VI = 0.01, emg_max_VI = 0.5, sen_max_VI = 0.9, sma_n=7):
     """
     Stage detection using MACD
     
