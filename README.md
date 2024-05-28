@@ -9,7 +9,7 @@ In this paper, we address the unique challenges of agricultural processes. More 
 In this study we have developed a framework for monitoring agricultural business process through satellite.
 ![framework](Figure/framework_overview.png)
 For evaluation, we have conducted a case study for 148 farm patches in Idaho, United States. This case study studied 15 years of farming between 2007 and 2022. 
-![studysite](Figure/studysite.png)
+
 
 This repository contains the implementation of "Seed-to-Harvest Process Monitoring using Remote Sensing". The paper was submitted to BPM 2024.
 
