@@ -16,9 +16,16 @@ elif cmdin=='CO':
   Case='Colorado'
 elif cmdin=='ND':
   Case='NorthDakota'
-output_name='log_'+Case+'_240524_max09'
-start_year=2008
 
+start_year=2008
+try:
+    smooth = sys.argv[2]
+    output_name='log_'+Case+'_310524_'+smooth
+except IndexError:
+    smooth = 'ALL'
+    output_name='log_'+Case+'_310524_'+smooth
+
+print(f"Case: {Case}, Output name: {output_name}, Start year: {start_year}, Smooth: {smooth}")
 
 sites_pth = 'Source/Data/'+Case+'/sites/'
 cdl_pth = 'Source/Data/'+Case+'/cdl/'
@@ -47,7 +54,7 @@ for i in np.arange(0,num_sites,1):
     loc=location[i]
 
     try:
-        timelog, warnings = sth.eventtime_MACD(ts, season, cdl, sid, loc, start_year=start_year)
+        timelog, warnings = sth.eventtime_MACD(ts, season, cdl, sid, loc, start_year=start_year, smooth=smooth)
         loglist.append(timelog)
         warningslist.append(warnings)
     except Exception as e:
@@ -86,4 +93,5 @@ if __name__ == "__main__":
     dataframe = pm4py.format_dataframe(timelog, case_id='CaseID', activity_key='Activity', timestamp_key='Timestamp')
     event_log = pm4py.convert_to_event_log(dataframe)
     pm4py.write_xes(event_log, output_xes_pth)
+print('Event log saved to ',output_hdf_pth)
 

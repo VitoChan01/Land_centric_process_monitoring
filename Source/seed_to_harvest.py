@@ -264,7 +264,7 @@ def itwritein(lst, vara):
     lst.append(vara[3])
     return lst
 
-def eventtime_MACD(ndvits, seasondf, sitecdl, siteid, siteloc, start_year=None, end_year=None):
+def eventtime_MACD(ndvits, seasondf, sitecdl, siteid, siteloc, start_year=None, end_year=None, smooth='ALL'):
     '''
     Apply MACD stage detection annually
 
@@ -276,6 +276,7 @@ def eventtime_MACD(ndvits, seasondf, sitecdl, siteid, siteloc, start_year=None, 
     siteloc: WGS84 lon lat (str)
     start_year: start year (int)
     end_year: end year (int)
+    smooth: smoothing method (str) default 'ALL'
 
     returns:
     lg: log (pd.DataFrame)
@@ -326,13 +327,25 @@ def eventtime_MACD(ndvits, seasondf, sitecdl, siteid, siteloc, start_year=None, 
         s1dL, s2dL, s4dL, s3dL, fltL = [], [], [], [], []
         
         #smoothing
-        IIR_smoothed = IIRff(ndvits.loc[yt]['mean'], 3, 0.05)
-        sg_smoothed = signal.savgol_filter(ndvits.loc[yt]['mean'], window_length=31, polyorder=2)
-        we_smoothed = WEfilter(ndvits.loc[yt]['mean'],3,1000)
-        
-        process_macd(IIR_smoothed, yt, 'BZP', start_season, end_season, siteid, sitecdl)
-        process_macd(sg_smoothed, yt, 'SG', start_season, end_season, siteid, sitecdl)
-        process_macd(we_smoothed, yt, 'WE', start_season, end_season, siteid, sitecdl)
+        if smooth == 'ALL':
+            IIR_smoothed = IIRff(ndvits.loc[yt]['mean'], 3, 0.05)
+            sg_smoothed = signal.savgol_filter(ndvits.loc[yt]['mean'], window_length=31, polyorder=2)
+            we_smoothed = WEfilter(ndvits.loc[yt]['mean'],3,1000)
+            process_macd(IIR_smoothed, yt, 'BZP', start_season, end_season, siteid, sitecdl)
+            process_macd(sg_smoothed, yt, 'SG', start_season, end_season, siteid, sitecdl)
+            process_macd(we_smoothed, yt, 'WE', start_season, end_season, siteid, sitecdl)
+        elif smooth == 'None':
+            process_macd(ndvits.loc[yt]['mean'], yt, 'mean', start_season, end_season, siteid, sitecdl)
+        else:
+            if 'BZP' in smooth:
+                IIR_smoothed = IIRff(ndvits.loc[yt]['mean'], 3, 0.05)
+                process_macd(IIR_smoothed, yt, 'BZP', start_season, end_season, siteid, sitecdl)
+            if 'SG' in smooth:
+                sg_smoothed = signal.savgol_filter(ndvits.loc[yt]['mean'], window_length=31, polyorder=2)
+                process_macd(sg_smoothed, yt, 'SG', start_season, end_season, siteid, sitecdl)
+            if 'WE' in smooth:
+                we_smoothed = WEfilter(ndvits.loc[yt]['mean'],3,1000)
+                process_macd(we_smoothed, yt, 'WE', start_season, end_season, siteid, sitecdl)
 
         caseid=f'{siteid:04}'+'_'+yt
         
