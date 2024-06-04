@@ -24,21 +24,35 @@ pip install -r requirements.txt
 ## Directories
 ### [Event_log](Event_log)
 This directory contains the main results.
-- `148sites_240129.xes`: Seed to harvest event log saved in xes format
-- `log_148sites_240129_df.h5`: Seed to harvest event log saved in h5 format
-- `transition_matrix.npy`: Estimated transition matrix for rotation prediction
+
+Idaho:
+- `log_Idaho_310524_ALL.xes`: Seed to harvest event log saved in xes format
+- `log_Idaho_310524_ALL_df.h5`: Seed to harvest event log saved in h5 format
+
+North Dakota:
+- `log_NorthDakota_310524_ALL.xes`: Seed to harvest event log saved in xes format
+- `log_NorthDakota_310524_ALL_df.h5`: Seed to harvest event log saved in h5 format
+
+
+Colorado:
+- `log_Colorado_310524_ALL.xes`: Seed to harvest event log saved in xes format
+- `log_Colorado_310524_ALL_df.h5`: Seed to harvest event log saved in h5 format
+
 ### [Source](Source)
 This directory contains the codes of this implementation.
 ## Codes
 ### Implementation
 - `GEE_download.ipynb`: [Download time series data from Google Earth Engine](Source/GEE_download.ipynb)
     * To download data from GEE a GEE account is required. ([Sign up for GEE](https://earthengine.google.com/)) 
-- `Eventlog_generation.py`: [Event log generation script](Source/Eventlog_generation.py)
-- `Crop_prediction.py`: [Crop rotation prediction script](Source/Crop_prediction.py)
-### Evaluation
+- `Eventlog_generation.py -site -[smoother='ALL']`: [Event log generation script](Source/Eventlog_generation.py)
+    - `site`: Select the site. 'ID': Idaho, 'ND': North Dakota, 'CO': Colorado.
+    - `[smoother]` Select a smoothing method. 'ALL', 'BZP', 'SG', 'WE', 'None'.
+
+### Evaluation and validation
 - `Performance_spectrum_evaluation.py`: [Create performance spectrum](Source/Performance_spectrum_evaluation.py)
 - `Smoothing_evaluation.py`: [Smoothing assessment](Source/Smoothing_evaluation.py)
-- `Usual_dates.py`: [Comparison to usual dates](Source/Usual_dates.py)
+- `Usual_dates.py -[smoother='ALL']`: [Validation through usual dates](Source/Usual_dates.py)
+    - `[smoother]` Select a smoothing method. 'ALL', 'BZP', 'SG', 'WE', 'None'.
 ### Modules
 - `seed_to_harvest.py`: [MACD activity recognition and event log enrichment](Source/seed_to_harvest.py)
 - `rotation_prediction.py`: [Markov chain rotation prediction](Source/rotation_prediction.py)

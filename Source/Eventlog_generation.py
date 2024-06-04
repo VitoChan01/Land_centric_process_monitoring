@@ -9,13 +9,17 @@ import os
 import sys
 
 #Dir path
-cmdin = sys.argv[1]
+try:
+    cmdin = sys.argv[1]
+except IndexError:
+    cmdin=input("Please select a case: ID, CO, or ND: ")
+
 if cmdin=='ID':
     Case='Idaho'
 elif cmdin=='CO':
-  Case='Colorado'
+    Case='Colorado'
 elif cmdin=='ND':
-  Case='NorthDakota'
+    Case='NorthDakota'
 
 start_year=2008
 try:

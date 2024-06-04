@@ -8,10 +8,24 @@ from datetime import datetime
 from datetime import timedelta
 import pickle
 import itertools
+import sys
 
-sites_pth = 'Source/Data/sites'
-cdl_pth = 'Source/Data/cdl'
-eventlog_pth = 'Event_log/148sites_240129.xes'
+cmdin = sys.argv[1]
+if cmdin=='ID':
+    Case='Idaho'
+elif cmdin=='CO':
+  Case='Colorado'
+elif cmdin=='ND':
+  Case='NorthDakota'
+
+try:
+    smooth = sys.argv[2]
+except IndexError:
+    smooth = 'ALL'
+
+sites_pth = 'Source/Data/'+Case+'/sites/'
+cdl_pth = 'Source/Data/'+Case+'/cdl/'
+eventlog_pth = 'Event_log/log_'+Case+'_310524_'+smooth+'.xes'
 
 #specify year to be evaluated
 yt='2016'
@@ -322,5 +336,5 @@ cp_log=pm4py.filtering.filter_event_attribute_values(flt_log, 'Crop', ['Sugarbee
 plot_ps_separate_ax(yt, cp_log, None, 2, yt+' Sugarbeets', 'usual_harvest_end',[False,False,False,False], False)    
 plt.tight_layout(rect=[0, 0, 1, 0.98])
 
-plt.savefig('Result\ps_sugarbeets.pdf') 
+plt.savefig('Result\ps_crop_case.pdf') 
 plt.show()
