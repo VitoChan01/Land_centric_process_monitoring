@@ -1,17 +1,16 @@
 # Seed_to_harvest_process_monitoring
 **Seed-to-Harvest Process Monitoring using Remote Sensing**
 
-
-Agricultural processes exhibit unique levels of complexity and risk. This makes the monitoring of seed-to-harvest processes an important management task of farmers as well as their business partners such as financial institutions. Agricultural processes are difficult to monitoring due to a diversity of environmental factors that can hit a field at any time and the fuzziness of the actual state of the crop. Therefore, recent techniques of process mining cannot be readily applied.
-In this paper, we address the unique challenges of agricultural processes. More specifically, we introduce a novel technique for monitoring seed-to-harvest processes by help of satellite sensors. We provide a proof-of-concept implementation and evaluate it in a case study on publicly available farm data from the United States. The evaluation demonstrates the viability of process mining as a technique for automatic monitoring of seed-to-harvest processes.
+Cultivation processes can only be captured indirectly through information systems. Therefore, real-time monitoring of them is an open and complex challenge.
+In this paper, we address the unique challenges of cultivation processes. More specifically, we introduce a novel technique to generate event logs of seed-to-harvest processes with the help of satellite data. We evaluate our approach using publicly available data from the United States. The evaluation demonstrates the viability of process mining as a technique for automatic monitoring of cultivation processes.
 
 **Framework**
 In this study we have developed a framework for monitoring agricultural business process through satellite.
 ![framework](Figure/framework_overview.png)
-For evaluation, we have conducted a case study for 148 farm patches in Idaho, United States. This case study studied 15 years of farming between 2007 and 2022. 
+We have implemented our framework to investigate 15 years of agricultural activity from 2008 to 2022 on farm patches in Idaho, North Dakota, and Colorado, United States.
 
 
-This repository contains the implementation of "Seed-to-Harvest Process Monitoring using Remote Sensing". The paper was submitted to BPM 2024.
+This repository contains the implementation of "Seed-to-Harvest Process Monitoring using Remote Sensing". The paper was submitted to ICPM 2024.
 
 ## Dependencies
 * Python 3.11+
