@@ -1,8 +1,8 @@
 # Seed_to_harvest_process_monitoring
-**Seed-to-Harvest Process Monitoring using Remote Sensing**
+**Monitoring Cultivation Processes with Uncertain States using Remote Sensing**
 
-Cultivation processes can only be captured indirectly through information systems. Therefore, real-time monitoring of them is an open and complex challenge.
-In this paper, we address the unique challenges of cultivation processes. More specifically, we introduce a novel technique to generate event logs of seed-to-harvest processes with the help of satellite data. We evaluate our approach using publicly available data from the United States. The evaluation demonstrates the viability of process mining as a technique for automatic monitoring of cultivation processes.
+Process mining has been intensively used for business processes that are extensively supported by information systems. The tight integration of information processing and process execution as leveraged in the service sector is however fully absent in agricultural processes such as land cultivation. Cultivation processes exhibit some challenging characteristics that make it difficult to monitor them in real-time: they unfold continuously over time, however with clearly identifiable states, while being exposed to the risk of various failure conditions
+that can hit any time. In this paper, we address this challenge of cultivation processes. We introduce a novel technique to generate event logs of seed-to-harvest processes as typical examples of cultivation with the help of satellite data. We evaluate our approach using publicly available data from the United States and demonstrate its validity. 
 
 **Framework**
 In this study we have developed a framework for monitoring agricultural business process through satellite.
@@ -10,7 +10,7 @@ In this study we have developed a framework for monitoring agricultural business
 We have implemented our framework to investigate 15 years of agricultural activity from 2008 to 2022 on farm patches in Idaho, North Dakota, and Colorado, United States.
 
 
-This repository contains the implementation of "Seed-to-Harvest Process Monitoring using Remote Sensing". The paper was submitted to ICPM 2024.
+This repository contains the implementation of "Monitoring Cultivation Processes with Uncertain States using Remote Sensing". The paper was submitted to ICPM 2024.
 
 ## Dependencies
 * Python 3.11+
@@ -53,6 +53,12 @@ This directory contains the codes of this implementation.
 - `Smoothing_evaluation.py`: [Smoothing assessment](Source/Smoothing_evaluation.py)
 - `Usual_dates.py -[smoother='ALL']`: [Validation through usual dates](Source/Usual_dates.py)
     - `[smoother]` Select a smoothing method. 'ALL', 'BZP', 'SG', 'WE', 'None'.
+- `Monitoring.py -site -[year=2022] -[crop=None] -[filtering=None] -[width=1.5]`: [Simulate monitoring](Source/Monitoring.py)
+    - `site`: Select the site. 'ID': Idaho, 'ND': North Dakota, 'CO': Colorado.
+    - `year`: Select a year (int).
+    - `crop`: Subseting with specific crop (str).
+    - `filtering`: If true remove of multiple crop cases, filter temporal outliers.
+    - `width`: If `filtering` is true filter by IQE +/- `width`*IQR (flt).
 ### Modules
 - `seed_to_harvest.py`: [MACD activity recognition and event log enrichment](Source/seed_to_harvest.py)
 - `rotation_prediction.py`: [Markov chain rotation prediction](Source/rotation_prediction.py)
@@ -62,7 +68,7 @@ The generated event log has the following attributes:
 |:----------:|:----------:|:----------:|
 | Activity| Activity recognized | str |
 | Timestamp| Timestamp filtered based on VI likelihood | pandas datetime object |
-| Time_uncertainty| All valid recognition timestamp | list of pandas datetime object |
+| Time_uncertainty| All valid recognition timestamp | List[pandas datetime object] |
 | CaseID| ID given to the case structured as xxxx_yyyy. The first 4 digit represent the ID given to the site and the last 4 digit represent the year of the case | str |
 | Crop| Cultivated crop | str |
 | SiteID| ID given to the farm patch | int |
