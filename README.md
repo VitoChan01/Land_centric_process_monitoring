@@ -61,7 +61,7 @@ This directory contains the codes of this implementation.
     - `width`: If `filtering` is true filter by IQE +/- `width`*IQR (flt).
 ### Modules
 - `seed_to_harvest.py`: [MACD activity recognition and event log enrichment](Source/seed_to_harvest.py)
-- `rotation_prediction.py`: [Markov chain rotation prediction](Source/rotation_prediction.py)
+
 ## Event log
 The generated event log has the following attributes:
 | Attribute | Description | Type |

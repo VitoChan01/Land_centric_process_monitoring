@@ -40,7 +40,7 @@ def allpreprocess(timelog,crop=None, filtering=None, width=1.5):
     '''
     Create doy column
     if crop is true subset cases by crop, 
-    if filtering is true remove multiple crop cases, filter outlier cases by width*IQR and remove incomplete cases
+    if filtering is true remove multiple crop cases, filter outlier cases by IQE +/- width*IQR and remove incomplete cases
     '''
     timelog['DayOfYear'] = timelog['Timestamp'].dt.dayofyear
     
