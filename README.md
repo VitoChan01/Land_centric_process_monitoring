@@ -45,16 +45,18 @@ This directory contains the codes of this implementation.
 - `GEE_download.ipynb`: [Download time series data from Google Earth Engine](Source/GEE_download.ipynb)
     * To download data from GEE a GEE account is required. ([Sign up for GEE](https://earthengine.google.com/)) 
 - `Eventlog_generation.py -site -[smoother='ALL']`: [Event log generation script](Source/Eventlog_generation.py)
-    - `site`: Select the site. 'ID': Idaho, 'ND': North Dakota, 'CO': Colorado.
+    - `site`: Provide the case name to select the site. (The folder should share the same name).
     - `[smoother]` Select a smoothing method. 'ALL', 'BZP', 'SG', 'WE', 'None'.
 
 ### Evaluation and validation
-- `Performance_spectrum_evaluation.py`: [Create performance spectrum](Source/Performance_spectrum_evaluation.py)
+- `Performance_spectrum_evaluation.py -site -[smoother='ALL']`: [Create performance spectrum](Source/Performance_spectrum_evaluation.py)
+    - `site`: Provide the case name to select the site. (The folder should share the same name).
+    - `[smoother]` Select a smoothing method. 'ALL', 'BZP', 'SG', 'WE', 'None'.
 - `Smoothing_evaluation.py`: [Smoothing assessment](Source/Smoothing_evaluation.py)
 - `Usual_dates.py -[smoother='ALL']`: [Validation through usual dates](Source/Usual_dates.py)
     - `[smoother]` Select a smoothing method. 'ALL', 'BZP', 'SG', 'WE', 'None'.
 - `Monitoring.py -site -[year=2022] -[crop=None] -[filtering=None] -[width=1.5]`: [Simulate monitoring](Source/Monitoring.py)
-    - `site`: Select the site. 'ID': Idaho, 'ND': North Dakota, 'CO': Colorado.
+    - `site`: Provide the case name to select the site. (The folder should share the same name).
     - `year`: Select a year (int).
     - `crop`: Subseting with specific crop (str).
     - `filtering`: If true remove of multiple crop cases, filter temporal outliers.

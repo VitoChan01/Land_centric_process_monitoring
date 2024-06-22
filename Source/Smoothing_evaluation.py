@@ -6,8 +6,10 @@ import matplotlib.pyplot as plt
 import seed_to_harvest as sth
 import os
 
-fig,ax=plt.subplots(3,1,figsize=(12, 12))
-for j,Case in enumerate(['Idaho','NorthDakota','Colorado']):
+Cases=['Idaho','NorthDakota','Colorado','Washington','Wisconsin']
+
+fig,ax=plt.subplots(len(Cases),1,figsize=(12*(len(Cases)/3), 12))
+for j,Case in enumerate(Cases):
     sites_pth = 'Source/Data/'+Case+'/sites/'
     site_names = os.listdir(sites_pth)
     num_sites=len(site_names)
@@ -41,17 +43,17 @@ for j,Case in enumerate(['Idaho','NorthDakota','Colorado']):
                 num_LMM_SG.append(LMM_count(sg_smoothed))
                 num_LMM_WE.append(LMM_count(we_smoothed))
         except Exception as e:
-            print(f"Error encountered for site {sid}: {e}")
+            print(f"Error encountered for {Case} site {sid}: {e}")
 
     data = [num_LMM_org, num_LMM_IIR, num_LMM_SG, num_LMM_WE]
     labels = ['Unfiltered', 'BZP', 'SG', 'WE']
 
     
     ax[j].boxplot(data, labels=labels, vert=False)
-    ax[j].set_title(Case, fontsize=20)
-    ax[j].set_ylabel('Smoothing Method', fontsize=18)        
+    ax[j].set_title(Case, fontsize=20)       
     ax[j].tick_params(axis='y', labelsize=16) 
 ax[-1].set_xlabel('Frequency', fontsize=18)
+ax[len(Cases)//2].set_ylabel('Smoothing Method', fontsize=18) 
 plt.suptitle('Number of Local Maxima and Minima', fontsize=24)
 plt.tight_layout()
 plt.savefig('Result/LMM_boxplotALL.pdf')

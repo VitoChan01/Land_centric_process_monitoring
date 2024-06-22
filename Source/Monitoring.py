@@ -5,16 +5,10 @@ import os
 import sys
 from matplotlib.colors import ListedColormap, BoundaryNorm
 import matplotlib.patches as mpatches
+import util
 
-cmdin = sys.argv[1]
-if cmdin=='ID':
-    Case='Idaho'
-elif cmdin=='CO':
-  Case='Colorado'
-elif cmdin=='ND':
-  Case='NorthDakota'
-else:
-  Case='All'
+Case = sys.argv[1]
+
 
 try:
     yt = sys.argv[2]

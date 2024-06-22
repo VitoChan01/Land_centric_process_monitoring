@@ -9,14 +9,12 @@ from datetime import timedelta
 import pickle
 import itertools
 import sys
+import os
 
-cmdin = sys.argv[1]
-if cmdin=='ID':
-    Case='Idaho'
-elif cmdin=='CO':
-  Case='Colorado'
-elif cmdin=='ND':
-  Case='NorthDakota'
+try:
+    Case = sys.argv[1]
+except IndexError:
+    Case = input("Please provide the case name (folder name) as an argument:")
 
 try:
     smooth = sys.argv[2]
@@ -26,6 +24,9 @@ except IndexError:
 sites_pth = 'Source/Data/'+Case+'/sites/'
 cdl_pth = 'Source/Data/'+Case+'/cdl/'
 eventlog_pth = 'Event_log/log_'+Case+'_310524_'+smooth+'.xes'
+
+site_names = os.listdir(sites_pth)
+num_sites=len(site_names)
 
 #specify year to be evaluated
 yt='2016'
@@ -37,7 +38,7 @@ log['doy']=[x.dayofyear for x in log['Timestamp']]
 log['Year']=[str(x.year) for x in log['Timestamp']]
 
 tsL=[]
-for i in np.arange(0,148,1):
+for i in np.arange(0,num_sites,1):
     #loading data
     sid=i
     ts=pd.read_hdf(sites_pth+f'/Site{sid:03}_NBARint.h5')

@@ -10,16 +10,9 @@ import sys
 
 #Dir path
 try:
-    cmdin = sys.argv[1]
+    Case = sys.argv[1]
 except IndexError:
-    cmdin=input("Please select a case: ID, CO, or ND: ")
-
-if cmdin=='ID':
-    Case='Idaho'
-elif cmdin=='CO':
-    Case='Colorado'
-elif cmdin=='ND':
-    Case='NorthDakota'
+    Case = input("Please provide the case name (folder name) as an argument:")
 
 start_year=2008
 try:
