@@ -9,7 +9,7 @@ except IndexError:
     smooth = 'ALL'
 fig, ax = plt.subplots(nrows=3, ncols=3, figsize=(12,15))#, sharex=True)
 #ax=ax.flatten()
-for i,Case in enumerate(['Idaho','NorthDakota','Colorado']):
+for i,Case in enumerate(['Idaho','NorthDakota','Colorado','Washington','Wisconsin']):
   print('Case:',Case, ' Smooth:',smooth)
   timelog=pd.read_hdf('Event_log/log_'+Case+'_310524_'+smooth+'_df.h5')
   #timelog=pd.read_hdf('Event_log/log_'+Case+'_240524_max09_df.h5')
