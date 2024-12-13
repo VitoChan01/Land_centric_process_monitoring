@@ -7,6 +7,7 @@ import itertools
 import seed_to_harvest as sth
 import os
 import sys
+from tqdm import tqdm
 
 #Dir path
 try:
@@ -17,10 +18,10 @@ except IndexError:
 start_year=2008
 try:
     smooth = sys.argv[2]
-    output_name='log_'+Case+'_310524_'+smooth
 except IndexError:
     smooth = 'ALL'
-    output_name='log_'+Case+'_310524_'+smooth
+
+output_name='log_'+Case+'_151024_'+smooth
 
 print(f"Case: {Case}, Output name: {output_name}, Start year: {start_year}, Smooth: {smooth}")
 
@@ -42,7 +43,9 @@ warningslist=[]
 faillist=[]
 #load location list
 location=np.load('Source/Data/'+Case+'/masklayers/wgscenterlist.npy')
-for i in np.arange(0,num_sites,1):
+crop_usuals=np.load('Source/Data/'+Case+'/masklayers/usuals.npy', allow_pickle=True)[0]
+season_usuals=np.load('Source/Data/'+Case+'/masklayers/seasonusuals.npy', allow_pickle=True)[0]
+for i in tqdm(np.arange(0,num_sites,1), desc='Site progress', unit='sites', leave=True):
     #loading data
     sid=i
     ts=pd.read_hdf(sites_pth+f'/Site{sid:03}_NBARint.h5')
@@ -51,7 +54,7 @@ for i in np.arange(0,num_sites,1):
     loc=location[i]
 
     try:
-        timelog, warnings = sth.eventtime_MACD(ts, season, cdl, sid, loc, start_year=start_year, smooth=smooth)
+        timelog, warnings = sth.eventtime_MACD(ts, season, cdl, sid, loc, crop_usuals, season_usuals, start_year=start_year, smooth=smooth)
         loglist.append(timelog)
         warningslist.append(warnings)
     except Exception as e:

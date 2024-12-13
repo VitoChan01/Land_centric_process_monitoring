@@ -193,5 +193,7 @@ for i,Case in enumerate(['Idaho','NorthDakota','Colorado','Washington','Wisconsi
 
 plt.suptitle('Validation with usual planting and harvesting dates',  fontsize=24)
 plt.tight_layout(rect=[0, 0.1, 1, 0.97])
-plt.savefig('Result/boxplot_3crop'+smooth+'.pdf', format='pdf')
-plt.show()
+plt.savefig('Figure/boxplot_3crop'+smooth+'.pdf', format='pdf')
+plt.show(block=False)
+plt.pause(3)
+plt.close('all')

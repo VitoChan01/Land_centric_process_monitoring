@@ -21,9 +21,11 @@ try:
 except IndexError:
     smooth = 'ALL'
 
+log_name='151024'
+
 sites_pth = 'Source/Data/'+Case+'/sites/'
 cdl_pth = 'Source/Data/'+Case+'/cdl/'
-eventlog_pth = 'Event_log/log_'+Case+'_310524_'+smooth+'.xes'
+eventlog_pth = 'Event_log/log_'+Case+'_'+log_name+'_'+smooth+'.xes'
 
 site_names = os.listdir(sites_pth)
 num_sites=len(site_names)
@@ -329,13 +331,17 @@ plot_ps_separate_ax(yt, pt_log, -3, None , 'Other crops', 250,historical_quartil
 
 plt.tight_layout(rect=[0, 0, 1, 0.98])
 
-plt.savefig('Result\ps_sim_with75.pdf') 
-plt.show()
+plt.savefig('Figure\ps_sim_with75.pdf') 
+plt.show(block=False)
+plt.pause(3)
+plt.close('all')
 
 fig, ax = plt.subplots(figsize=(15, 8))
 cp_log=pm4py.filtering.filter_event_attribute_values(flt_log, 'Crop', ['Sugarbeets'])
 plot_ps_separate_ax(yt, cp_log, None, 2, yt+' Sugarbeets', 'usual_harvest_end',[False,False,False,False], False)    
 plt.tight_layout(rect=[0, 0, 1, 0.98])
 
-plt.savefig('Result\ps_crop_case.pdf') 
-plt.show()
+plt.savefig('Figure\ps_crop_case.pdf') 
+plt.show(block=False)
+plt.pause(3)
+plt.close('all')

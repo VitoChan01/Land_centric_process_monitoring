@@ -5,6 +5,7 @@ import pandas as pd
 from scipy import signal
 from datetime import datetime
 from geopy.geocoders import Nominatim
+from tqdm import tqdm
 
 #filters
 def IIRff(data, oder, cf):
@@ -258,13 +259,23 @@ def itwritein(lst, vara):
     returns:
     lst: list (list)
     """
-    lst.append(vara[0])
-    lst.append(vara[1])
-    lst.append(vara[2])
-    lst.append(vara[3])
+    for va in vara:
+        lst.append(va)
     return lst
 
-def eventtime_MACD(ndvits, seasondf, sitecdl, siteid, siteloc, start_year=None, end_year=None, smooth='ALL'):
+def usual_class(log, start, end, act, crop=None):
+    if crop:
+        log.loc[(log['Crop']==crop)&(log['Activity']==act)&(log['doy']>=start)&(log['doy']<=end),['Activity']]='Usual '+act
+        log.loc[(log['Crop']==crop)&(log['Activity']==act)&(log['doy']<start),['Activity']]='Early '+act
+        log.loc[(log['Crop']==crop)&(log['Activity']==act)&(log['doy']>end),['Activity']]='Late '+act
+    else:
+        log.loc[(log['Activity']==act)&(log['doy']>=start)&(log['doy']<=end),['Activity']]='Usual '+act
+        log.loc[(log['Activity']==act)&(log['doy']<start),['Activity']]='Early '+act
+        log.loc[(log['Activity']==act)&(log['doy']>end),['Activity']]='Late '+act
+    return log
+
+
+def eventtime_MACD(ndvits, seasondf, sitecdl, siteid, siteloc, crop_usuals, season_usuals, start_year=None, end_year=None, smooth='ALL'):
     '''
     Apply MACD stage detection annually
 
@@ -274,6 +285,7 @@ def eventtime_MACD(ndvits, seasondf, sitecdl, siteid, siteloc, start_year=None, 
     sitecdl: crop type (pd.DataFrame)
     siteid: site ID (int)
     siteloc: WGS84 lon lat (str)
+    usuals: usual dates of emergence and dormancy in day of year (int)
     start_year: start year (int)
     end_year: end year (int)
     smooth: smoothing method (str) default 'ALL'
@@ -319,10 +331,21 @@ def eventtime_MACD(ndvits, seasondf, sitecdl, siteid, siteloc, start_year=None, 
         emgmin=ndvits.loc[[ts for ts in allList[0] if ts <matmax]]['mean'].idxmin()
         return [emgmin, matmax, senmax, dormin]
     
-    for y in np.arange(start_year, end_year+1, 1):
+    def uncertainty_range(uncertainty):
+        if type(uncertainty)==list:
+            uncertainty_doy=[date.day_of_year for date in uncertainty]
+            return np.max(uncertainty_doy)-np.min(uncertainty_doy)
+        else:
+            return 0
+    
+    for y in tqdm(np.arange(start_year, end_year+1, 1), desc='Site '+str(siteid), unit='years', leave=False):
         yt=f'{y}'
         start_season = seasondf.loc[int(yt)]['start_season']
         end_season = seasondf.loc[int(yt)]['end_season']
+        try:
+            end_season_previous = seasondf.loc[int(yt)-1]['end_season']
+        except:
+            end_season_previous = None
         #list for storing stages
         s1dL, s2dL, s4dL, s3dL, fltL = [], [], [], [], []
         
@@ -347,30 +370,31 @@ def eventtime_MACD(ndvits, seasondf, sitecdl, siteid, siteloc, start_year=None, 
                 we_smoothed = WEfilter(ndvits.loc[yt]['mean'],3,1000)
                 process_macd(we_smoothed, yt, 'WE', start_season, end_season, siteid, sitecdl)
 
-        caseid=f'{siteid:04}'+'_'+yt
+        caseid=state+'_'+f'{siteid:04}'+'_'+yt
         
         # Write to list
         if len(s1dL) != 0:
-            lst1=itwritein(lst1, [s1dL,s2dL,s3dL,s4dL])
-            lst10=itwritein(lst10, VIlikeliness([s1dL,s2dL,s3dL,s4dL]))
-            lst2=itwritein(lst2, ['Emergence', 'Maturity', 'Senescence', 'Dormancy'])
-            lst3=itwritein(lst3, [caseid, caseid, caseid, caseid])
-            lst4=itwritein(lst4, [siteid, siteid, siteid, siteid])
-            lst5=itwritein(lst5, [county, county, county, county])
-            lst6=itwritein(lst6, [state, state, state, state])
-            lst7=itwritein(lst7, [country, country, country, country])
-            lst8=itwritein(lst8, [getVIrange(s1dL),getVIrange(s2dL),getVIrange(s3dL),getVIrange(s4dL)])
-            lst9=itwritein(lst9, [len(s1dL), len(s2dL), len(s3dL), len(s4dL)])
-            #lst11=itwritein(lst11, [sitecdl.loc[y][0], sitecdl.loc[y][0], sitecdl.loc[y][0], sitecdl.loc[y][0]])
-            lst12=itwritein(lst12, [crop_id[int(sitecdl.loc[y][0])], crop_id[int(sitecdl.loc[y][0])],crop_id[int(sitecdl.loc[y][0])],crop_id[int(sitecdl.loc[y][0])]])
-            lst13=itwritein(lst13, [siteloc, siteloc, siteloc, siteloc])
+            lst1=itwritein(lst1, [end_season_previous,start_season,s1dL,s2dL,s3dL,s4dL,end_season])
+            lst10=itwritein(lst10, [end_season_previous,start_season]+VIlikeliness([s1dL,s2dL,s3dL,s4dL])+[end_season])
+            lst2=itwritein(lst2, ['First Snow Previous','Last Snow','Emergence', 'Maturity', 'Senescence', 'Dormancy', 'First Snow'])
+            lst3=itwritein(lst3, [caseid] * 7)
+            lst4=itwritein(lst4, [siteid]*7)
+            lst5=itwritein(lst5, [county]*7)
+            lst6=itwritein(lst6, [state]*7)
+            lst7=itwritein(lst7, [country]*7)
+            lst8=itwritein(lst8, [getVIrange(end_season_previous),getVIrange(start_season),getVIrange(s1dL),getVIrange(s2dL),getVIrange(s3dL),getVIrange(s4dL), getVIrange(end_season)])
+            lst9=itwritein(lst9, [1,1,len(s1dL), len(s2dL), len(s3dL), len(s4dL),1])
+            lst11=itwritein(lst11, [uncertainty_range(end_season_previous),uncertainty_range(start_season),uncertainty_range(s1dL),uncertainty_range(s2dL),uncertainty_range(s3dL),uncertainty_range(s4dL),uncertainty_range(end_season)])
+            lst12=itwritein(lst12, [crop_id[int(sitecdl.loc[y][0])]]*7)
+            lst13=itwritein(lst13, [siteloc]*7)
+
         else:
             Warning_log.append([siteid, yt, sitecdl])
     lg['Activity']=lst2
     lg['Timestamp']=lst10
     lg['Time_uncertainty']=lst1
+    lg['Uncertainty_wdith']=lst11
     lg['CaseID']=lst3
-    #lg['CropID']=lst11
     lg['Crop']=lst12
     lg['SiteID']=lst4
     lg['WGS84_lon_lat']=lst13
@@ -380,7 +404,20 @@ def eventtime_MACD(ndvits, seasondf, sitecdl, siteid, siteloc, start_year=None, 
     lg['NDVI_range']=lst8
     lg['num_valid_est']=lst9
 
+    #post
+    lg['doy']=lg['Timestamp'].dt.dayofyear
+    keynames=list(crop_usuals.keys())
+    for crop in keynames:
+        lg=usual_class(lg, crop_usuals[crop][0][0], crop_usuals[crop][0][1],'Emergence', crop)
+        lg=usual_class(lg, crop_usuals[crop][1][0], crop_usuals[crop][1][1],'Dormancy', crop)
+    lg=usual_class(lg, season_usuals[0][0], season_usuals[0][1],'First Snow')
+    lg=usual_class(lg, season_usuals[0][0], season_usuals[0][1],'First Snow Previous')
+    lg=usual_class(lg, season_usuals[1][0], season_usuals[1][1],'Last Snow')
+    
+    lg.drop(columns=['doy'], inplace=True)
     return lg, Warning_log
+
+
 
 #plotting
 def plot_macd(df, yt, flt, raw, start_season, end_season, s1dL, s2dL, s3dL, s4dL, fltL, valL):
