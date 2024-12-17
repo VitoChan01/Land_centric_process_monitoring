@@ -60,6 +60,8 @@ This directory contains the codes of this implementation.
     - `crop`: Subseting with specific crop (str).
     - `filtering`: If true remove of multiple crop cases, filter temporal outliers.
     - `width`: If `filtering` is true filter by IQE +/- `width`*IQR (flt).
+- `dfg.py -site`: [Directly-Follows Graph by seasonal timing](Source/dfg.py)
+    - `site`: Provide the case name to select the site. If not provided, Idaho, NorthDakota, and Colorado will be loaded and combined to generate DFGs. The folder should share the same name.
 ### Modules
 - `seed_to_harvest.py`: [MACD activity recognition and event log enrichment](Source/seed_to_harvest.py)
 
