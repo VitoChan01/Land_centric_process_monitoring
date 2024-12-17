@@ -5,7 +5,6 @@ import os
 import sys
 from matplotlib.colors import ListedColormap, BoundaryNorm
 import matplotlib.patches as mpatches
-import util
 
 Case = sys.argv[1]
 
@@ -170,7 +169,7 @@ plt.xlabel('Day of year')
 plt.ylabel('Number of site')
 
 colors = ['steelblue','brown', 'green', 'yellow', 'orange', 'red','steelblue']
-labels = ['First Snow Previous', 'Last Snow', 'Emergence', 'Maturity', 'Senescence', 'Dormancy', 'First Snow']
+labels = ['Winter', 'Last Snow', 'Emergence', 'Maturity', 'Senescence', 'Dormancy', 'Winter']
 patches = [mpatches.Patch(color=color, alpha=0.6, label=label) for color, label in zip(colors, labels)]
 
 

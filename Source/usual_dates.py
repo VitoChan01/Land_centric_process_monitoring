@@ -7,13 +7,14 @@ try:
     smooth = sys.argv[1]
 except IndexError:
     smooth = 'ALL'
+
+log_name='151024'
+
 fig, ax = plt.subplots(nrows=3, ncols=3, figsize=(12,15))#, sharex=True)
 #ax=ax.flatten()
 for i,Case in enumerate(['Idaho','NorthDakota','Colorado','Washington','Wisconsin']):
   print('Case:',Case, ' Smooth:',smooth)
-  timelog=pd.read_hdf('Event_log/log_'+Case+'_310524_'+smooth+'_df.h5')
-  #timelog=pd.read_hdf('Event_log/log_'+Case+'_240524_max09_df.h5')
-  #timelog=pd.read_hdf('Event_log/log_148sites_240129_df.h5')
+  timelog=pd.read_hdf('Event_log/log_'+Case+'_'+log_name+'_'+smooth+'_df.h5')
 
   #source usda field crops usual planting and harvesting --idaho
   #https://downloads.usda.library.cornell.edu/usda-esmis/files/vm40xr56k/dv13zw65p/w9505297d/planting-10-29-2010.pdf

@@ -21,7 +21,9 @@ try:
 except IndexError:
     smooth = 'ALL'
 
-output_name='log_'+Case+'_151024_'+smooth
+log_name='151024'
+
+output_name='log_'+Case+'_'+log_name+'_'+smooth
 
 print(f"Case: {Case}, Output name: {output_name}, Start year: {start_year}, Smooth: {smooth}")
 

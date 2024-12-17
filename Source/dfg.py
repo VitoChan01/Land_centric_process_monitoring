@@ -50,9 +50,20 @@ if not os.path.exists(output_dir):
 for event in log_start:
     if event[-8:]=='Previous':
         log_temp=pm4py.filter_start_activities(log, event)
+        log_temp=pm4py.filter_event_attribute_values(log_temp,'Activity'
+                                                     ,values=['Early First Snow'
+                                                              ,'Usual First Snow'
+                                                              ,'Late First Snow']
+                                                     , level="event", retain=False)
     else:
-        log_temp=pm4py.filter_event_attribute_values(log,'Activity',values=['Early First Snow Previous','Usual First Snow Previous','Late First Snow Previous']
-                                        , level="event", retain=False)
+        log_temp=pm4py.filter_event_attribute_values(log,'Activity'
+                                                     ,values=['Early First Snow Previous'
+                                                              ,'Usual First Snow Previous'
+                                                              ,'Late First Snow Previous',
+                                                              'Early First Snow'
+                                                              ,'Usual First Snow'
+                                                              ,'Late First Snow']
+                                                     , level="event", retain=False)
         log_temp=pm4py.filter_event_attribute_values(log_temp,'Activity',values=event, level="case", retain=True)
     #counts if want relative frequency
     #counts=pm4py.get_start_activities(log_temp).get(event)
@@ -65,7 +76,6 @@ for event in log_start:
 
 
     dfg, start_activities, end_activities = pm4py.discover_dfg(log_temp)
-    #dfg=dfg_discovery.apply(log_temp,activity_counts)
     dfg_percentage = {key: round((value / counts) * 100,2) for key, value in dfg.items()}
     parameters = {
         dfg_visualizer.Variants.FREQUENCY.value.Parameters.FORMAT: "pdf"
@@ -73,13 +83,10 @@ for event in log_start:
     
     #pm4py.view_dfg(dfg_percentage, start_activities, end_activities)
     gviz = dfg_visualizer.apply(dfg_percentage)#, parameters=parameters)
-    #if locator==1:
     gviz.attr(label=event, fontsize='20', labelloc='t')
-    #save the graph as a png file
     path='Figure/dfg_com/'+Case+'_'+event
     path=path.replace(" ", "_")
     gviz.render(path, format='png')
-    gviz.render(path, format='svg')
     image_path.append(path+'.png')
 
 plt.figure(figsize=(20, 20))
