@@ -1,4 +1,4 @@
-# Seed_to_harvest_process_monitoring
+# Land_centric_process_monitoring
 **Monitoring Land-centric Business Processes using Remote Sensing and Satellite Data**
 
 Process mining has been intensively used for business processes that are extensively supported by information systems. The tight integration of information processing and process execution as leveraged in the service sector is however often absent in land-centric processes such as farming. Land-centric processes exhibit some challenging characteristics that make it difficult to monitor them in real-time: they unfold continuously over time, however with clearly identifiable states. In this paper, we address the challenge of monitoring land-centric processes. We introduce a framework to generate event logs of land-centric processes by utilizing remote sensing systems such as satellites. We demonstrate the feasibility of our approach using publicly available data on agricultural processes in the United States.
